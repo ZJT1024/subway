@@ -3,7 +3,9 @@ import subwayline
 import subwaymap
 import subwaystation
 import tkinter as tk
-
+import codecs
+from tkinter import messagebox
+import time
 
 
 
@@ -171,6 +173,34 @@ def search(start_name, end_name, now_name,cost,min_cost):
     else:
         pass
 
+subway_info = "subway_info.txt"
+line_info = "line_info.txt"
+subway_text = codecs.open(subway_info, 'w', 'utf-8')
+for station in station_list:
+    subway_text.write(station.sname + "\n")
+    for lname in station.lname_list:
+        subway_text.write(lname + "\\")
+    subway_text.write("\n")
+    subway_text.write("\n")
+subway_text.close()
+
+line_text = codecs.open(line_info, 'w', 'utf-8')
+for key in line_dic:
+    print(key)
+    line_text.write(key + "\n")
+    line_text.write(str(line_dic[key]['is_loop'])+"\n")
+    for sname in line_dic[key]['transfer_station_name_list']:
+        line_text.write(sname)
+        line_text.write(' ')
+    line_text.write("\n")
+    for sname in line_dic[key]['station_name_list']:
+        line_text.write(sname)
+        line_text.write(" ")
+    line_text.write("\n")
+    # 最后一个需要换行
+    line_text.write("\n")
+
+line_text.close()
 
 window = tk.Tk()
 window.title("subway MAP UI")
@@ -200,6 +230,17 @@ def find_a_way():
     start_name = str(e1.get())
     end_name = str(e2.get())
 
+    #########
+    flag = False
+    for tmp_station in station_list:
+        if tmp_station.sname == start_name or tmp_station.sname == end_name:
+            flag = True
+            break
+    if flag == False:
+        messagebox.showinfo(title="WRONG!", message="check your input!")
+        return
+    ###########
+
     print(start_name, end_name)
     name_list = []
     name_list.append(start_name)
@@ -212,8 +253,49 @@ def find_a_way():
                 break
 
 
+
 button = tk.Button(window, text="寻找最短路径", bg='red', width=15, height=2, command=find_a_way)
 button.place(x=0, y=60)
+e3 = tk.Entry(window)
+e3.place(x=0, y=120)
+def show_line():
+    line_name = e3.get()
+    if line_name not in line_dic.keys():
+        messagebox.showinfo(title="WRONG!", message="line_name should in Line 1\Line 2\Line 4/Daxing\Line 5\Line 8\Line 9\Line 10\Line 13\Line 15\Batong Line\Changping Line\Yizhuang Line\Fangshan Line\Airport Express")
+        return
+
+    # 显示颜色
+    print("----------------------------------------")
+
+    for (tmp_station,l) in station_label_list:
+        for tmp_line in tmp_station.lname_list:
+            if tmp_line == line_name:
+                l['bg'] = 'white'
+                break
+    print("kachi")
+    print("----------------------------------------")
+    time.sleep(10)
+
+    # 颜色复原
+    for (station, l) in station_label_list:
+        lname_list = station.lname_list
+        if len(lname_list) > 1:
+            color = 'orange'
+        else:
+            lname = station.lname_list[0]
+            color = line_dic[lname]['color']
+        l['bg'] = color
+
+
+
+
+    return
+l3 = tk.Label(window, text="输入线路名",font=('Aerial', 15))
+l3.place(x=0, y = 90)
+
+button1 = tk.Button(window, text="显示路线", bg='red', width=15, height=2, command=show_line)
+button1.place(x=0, y=150)
+
 for tmp_station in station_list:
     text = tmp_station.sname
     mapx = tmp_station.mapx
@@ -228,4 +310,5 @@ for tmp_station in station_list:
     l.place(x=mapx, y=mapy)
     station_label_list.append((tmp_station, l))
 window.mainloop()
+
 
