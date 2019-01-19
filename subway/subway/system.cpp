@@ -51,13 +51,15 @@ System::System()
 		}
 		else if(type == '@')
 		{
-			in >> station_x >> station_y >> station_num;
+			in >> station_x >> station_y >> line_name;
 
-			if (station_name == "机场线")  // 应为机场线是单程线，需要分开处理
+			if (line_name == "机场线")  // 应为机场线是单程线，需要分开处理
 			{
 				graph[station_x].push_back(make_pair(station_y, line_dic[line_name]));
 				continue;
 			}
+
+			int temp_id = line_dic[line_name];
 
 			graph[station_x].push_back(make_pair(station_y, line_dic[line_name]));
 			graph[station_y].push_back(make_pair(station_x, line_dic[line_name]));
