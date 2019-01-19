@@ -1,3 +1,7 @@
 ﻿  subway.cpp
 c:\users\lenovo\desktop\软工项目_地铁\subway\subway\headfile.h(21): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+  system.cpp
+c:\users\lenovo\desktop\软工项目_地铁\subway\subway\headfile.h(21): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+c:\users\lenovo\desktop\软工项目_地铁\subway\subway\system.cpp(123): warning C4018: “<”: 有符号/无符号不匹配
+  正在生成代码...
   subway.vcxproj -> C:\Users\lenovo\Desktop\软工项目_地铁\subway\Debug\subway.exe

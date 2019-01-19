@@ -39,6 +39,12 @@ System::System()
 			station_num++; // 为了和地铁编号统一，站点编号从1开始
 			station_set[station_num] = Station(station_id, station_x, station_y, station_name);
 			station_dic[station_name] = station_id;
+			decode_station[station_id] = station_name;
+
+			// 初始时每个站点都没有访问过
+			station_book[station_id] = false;
+			station_que.push(station_id);
+			
 		}
 		else if (type == '%')
 		{
@@ -72,7 +78,7 @@ System::System()
 
 int System::distance[Maxn]; //在此申明静态变量
 
-void System::Find_the_route(const string& start_station, const string& end_station, int transform)
+int System::Find_the_route(const string& start_station, const string& end_station, int transform , string& order)
 {
 	if (station_dic.find(start_station) == station_dic.end() || station_dic.find(end_station) == station_dic.end())
 	{
@@ -172,18 +178,17 @@ void System::Find_the_route(const string& start_station, const string& end_stati
 	}*/
 
 
-	string str = "\n";
 	int temp_id = eid;
 	int cost = 0;
 
 	while (temp_id != sid)
 	{
 		cost++;
-		str = "\n" + station_set[temp_id].name + str;
+		order = "\n" + station_set[temp_id].name + order;
 
 		if (transform_station[temp_id] != 0)
 		{
-			str = " 换乘" + line_set[path[temp_id].second].name + str;
+			order = " 换乘" + line_set[path[temp_id].second].name + order;
 		}
 
 		if (transform_station[temp_id] != 0)
@@ -193,13 +198,39 @@ void System::Find_the_route(const string& start_station, const string& end_stati
 		temp_id = path[temp_id].first;
 	}
 
-	str = station_set[temp_id].name + str;
+	order = station_set[temp_id].name + order;
 	if (transform)
 	{
-		cout << exchange_times * extral_cost + cost + 1 << endl << str;
+		return (exchange_times * extral_cost + cost + 1);
 	}
 	else
 	{
-		cout << cost + 1 << endl << str;
+		return cost + 1;
 	}
+}
+
+int System::Traversal(const string& now_station , string& order)
+{
+	int cost = 0;  // 遍历问题不用考虑换乘问题（一定要换成的。。）
+	int now = station_dic[now_station];
+
+	station_book[now] = true;
+	cost++;
+	
+	while (!station_que.empty())
+	{
+		int to = station_que.front();
+		station_que.pop();
+
+		if (station_book[to] == true)
+		{
+			continue;
+		}
+
+		cost += Find_the_route(decode_station[now], decode_station[to], 0 , order);
+		station_book[to] = true;
+		now = to;
+	}
+
+	return cost;	
 }

@@ -30,7 +30,13 @@ private :
 		}
 	};
 
+
+	map<int, bool> station_book;  // 遍历时记录结点是否被访问过  pair记录站点id，bool记录是否被访问过
+	queue<int> station_que;  //  记录未访问过的结点
+	map<int, string> decode_station;  // 将站点id对应站点名字
+
 public :
 	System();
-	void Find_the_route(const string& start_station , const string& end_station , int transform);
+	int Find_the_route(const string& start_station , const string& end_station , int transform , string& order);
+	int Traversal(const string& now_station , string& order);
 };
