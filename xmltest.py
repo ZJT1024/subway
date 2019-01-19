@@ -259,23 +259,6 @@ button.place(x=0, y=60)
 e3 = tk.Entry(window)
 e3.place(x=0, y=120)
 def show_line():
-    line_name = e3.get()
-    if line_name not in line_dic.keys():
-        messagebox.showinfo(title="WRONG!", message="line_name should in Line 1\Line 2\Line 4/Daxing\Line 5\Line 8\Line 9\Line 10\Line 13\Line 15\Batong Line\Changping Line\Yizhuang Line\Fangshan Line\Airport Express")
-        return
-
-    # 显示颜色
-    print("----------------------------------------")
-
-    for (tmp_station,l) in station_label_list:
-        for tmp_line in tmp_station.lname_list:
-            if tmp_line == line_name:
-                l['bg'] = 'white'
-                break
-    print("kachi")
-    print("----------------------------------------")
-    time.sleep(10)
-
     # 颜色复原
     for (station, l) in station_label_list:
         lname_list = station.lname_list
@@ -285,11 +268,34 @@ def show_line():
             lname = station.lname_list[0]
             color = line_dic[lname]['color']
         l['bg'] = color
+    line_name = e3.get()
+    if line_name not in line_dic.keys():
+        messagebox.showinfo(title="WRONG!", message="line_name should in Line 1\Line 2\Line 4/Daxing\Line 5\Line 8\Line 9\Line 10\Line 13\Line 15\Batong Line\Changping Line\Yizhuang Line\Fangshan Line\Airport Express")
+        return
 
+    # 显示颜色
+    print("----------------------------------------")
+    for (tmp_station, l) in station_label_list:
+        if line_name in tmp_station.lname_list:
+            l['bg'] = 'white'
+            time.sleep(.300)
+            l.update()
+    print("----------------------------------------")
 
-
-
+    # 颜色复原
+    time.sleep(3)
+    for (station, l) in station_label_list:
+        lname_list = station.lname_list
+        if len(lname_list) > 1:
+            color = 'orange'
+        else:
+            lname = station.lname_list[0]
+            color = line_dic[lname]['color']
+        l['bg'] = color
+    for (station, l) in station_label_list:
+        l.update()
     return
+
 l3 = tk.Label(window, text="输入线路名",font=('Aerial', 15))
 l3.place(x=0, y = 90)
 
