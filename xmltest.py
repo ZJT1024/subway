@@ -256,6 +256,5 @@ for tmp_station in station_list:
     l.place(x=mapx, y=mapy)
     station_label_list.append((tmp_station, l))
 
-
 # 窗口的循环
 window.mainloop()
