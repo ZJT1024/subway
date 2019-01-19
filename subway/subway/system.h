@@ -30,8 +30,7 @@ private :
 		}
 	};
 
-
-	map<int, bool> station_book;  // 遍历时记录结点是否被访问过  pair记录站点id，bool记录是否被访问过
+	int* station_book;
 	queue<int> station_que;  //  记录未访问过的结点
 	map<int, string> decode_station;  // 将站点id对应站点名字
 

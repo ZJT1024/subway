@@ -24,6 +24,7 @@ System::System()
 
 	station_set = new Station[Maxn];
 	line_set = new Line[Maxm];
+	station_book = new int[Maxn];
 
 
 	char type;
@@ -44,8 +45,8 @@ System::System()
 			decode_station[station_id] = station_name;
 
 			// 初始时每个站点都没有访问过
-			station_book[station_id] = false;
 			station_que.push(station_id);
+			station_book[station_id] = 0;
 			
 		}
 		else if (type == '%')
@@ -108,6 +109,7 @@ int System::Find_the_route(const string& start_station, const string& end_statio
 	que.push(make_pair(sid, 0));
 	distance[sid] = 0;
 	path[sid] = make_pair(sid, 0);
+	station_book[sid] = 1;
 
 	int exchange_times = 0;
 
@@ -124,6 +126,7 @@ int System::Find_the_route(const string& start_station, const string& end_statio
 		else
 		{
 			visited[now.first] = 1;
+			station_book[now.first] = 1;
 		}
 
 		// 寻找从当前节点开始能到达的站点的最短路
@@ -178,12 +181,6 @@ int System::Find_the_route(const string& start_station, const string& end_statio
 		}
 	}
 
-	/*for (int i = 0; i < path.size(); i++)
-	{
-		int temp_id = path[i].first;
-		string temp_name = station_set[temp_id].name;
-	}*/
-
 
 	int temp_id = eid;
 	int cost = 0;
@@ -205,7 +202,7 @@ int System::Find_the_route(const string& start_station, const string& end_statio
 		temp_id = path[temp_id].first;
 	}
 
-	order = station_set[temp_id].name + order;
+	//order = station_set[temp_id].name + order;
 	if (transform)
 	{
 		return (exchange_times * extral_cost + cost + 1);
@@ -220,24 +217,36 @@ int System::Traversal(const string& now_station , string& order)
 {
 	int cost = 0;  // 遍历问题不用考虑换乘问题（一定要换成的。。）
 	int now = station_dic[now_station];
+	string output;
 
-	station_book[now] = true;
+	station_book[now] = 1;
 	cost++;
+
+	order = station_set[now].name + order;
 	
 	while (!station_que.empty())
 	{
 		int to = station_que.front();
 		station_que.pop();
 
-		if (station_book[to] == true)
+		if (station_book[to])
 		{
 			continue;
 		}
 
-		cost += Find_the_route(decode_station[now], decode_station[to], 0 , order);
-		station_book[to] = true;
+		output = "";
+		string start_station = decode_station[now], end_station = decode_station[to];
+		cost += Find_the_route(start_station, end_station, 0 , output);
+		station_book[to] = 1;
+
+		order += output;
+
 		now = to;
 	}
+
+	output = "";
+	cost += Find_the_route(decode_station[now], now_station, 0, output);
+	order += output;
 
 	return cost;	
 }
