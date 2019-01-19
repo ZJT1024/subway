@@ -27,7 +27,9 @@ System::System()
 
 
 	char type;
-	int station_id, station_x, station_y, line_id;
+	int station_id, station_x, station_y;
+	int station_on_line;
+	int station_from, station_to;
 	string station_name, line_name;
 	
 	while (in >> type)
@@ -48,15 +50,22 @@ System::System()
 		}
 		else if (type == '%')
 		{
-			in >> line_name >> line_id;
+			in >> line_name >> station_on_line;
+			line_set[line_num] = Line(station_on_line, line_name);
 
+			for (int i = 0; i < station_on_line; i++)
+			{
+				int temp_station_id;
+				in >> temp_station_id;
+				line_set[line_num].station_order.push_back(temp_station_id);
+			}
 
-			line_set[line_num] = Line(line_id, line_name);
-			line_dic[line_name] = line_id;
+			line_dic[line_name] = line_num;
 			line_num++;
 		}
 		else if(type == '@')
 		{
+			// station_x   station_y 为两个站点
 			in >> station_x >> station_y >> line_name;
 
 			if (line_name == "机场线")  // 应为机场线是单程线，需要分开处理
@@ -64,8 +73,6 @@ System::System()
 				graph[station_x].push_back(make_pair(station_y, line_dic[line_name]));
 				continue;
 			}
-
-			int temp_id = line_dic[line_name];
 
 			graph[station_x].push_back(make_pair(station_y, line_dic[line_name]));
 			graph[station_y].push_back(make_pair(station_x, line_dic[line_name]));
