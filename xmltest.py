@@ -254,10 +254,19 @@ def find_a_way():
 
 
 
-button = tk.Button(window, text="寻找最短路径", bg='red', width=15, height=2, command=find_a_way)
+button = tk.Button(window, text="寻找最短路径", bg='white', width=15, height=2, command=find_a_way)
 button.place(x=0, y=60)
 e3 = tk.Entry(window)
-e3.place(x=0, y=120)
+e3.place(x=0, y=130)
+
+
+T = tk.Text(window, height=50, width=30)
+T.place(x=1000, y=0)
+T.insert('insert',"你好！")
+l3 = tk.Label(window, text="输入线路名",font=('Aerial', 15))
+l3.place(x=0, y = 100)
+
+
 def show_line():
     # 颜色复原
     for (station, l) in station_label_list:
@@ -274,12 +283,30 @@ def show_line():
         return
 
     # 显示颜色
+    flag = []
+    for i in range(0,len(station_label_list)):
+        flag.append(False)
+    tmp_sname_list = []
     print("----------------------------------------")
-    for (tmp_station, l) in station_label_list:
-        if line_name in tmp_station.lname_list:
-            l['bg'] = 'white'
-            time.sleep(.300)
-            l.update()
+    for sname in line_dic[line_name]['station_name_list']:
+        tmp_sname_list.append(sname)
+    output = ''
+    output += line_name
+    output += '\n'
+    for tmp_sname in tmp_sname_list:
+        output += tmp_sname
+        output += '\n'
+    T.delete(0.0, tk.END)
+    T.insert('insert', output)
+    T.update()
+    for sname in line_dic[line_name]['station_name_list']:
+        for (tmp_station, l) in station_label_list:
+            if tmp_station.sname == sname:
+                l['bg'] = 'white'
+                time.sleep(.300)
+                l.update()
+
+
     print("----------------------------------------")
 
     # 颜色复原
@@ -296,11 +323,9 @@ def show_line():
         l.update()
     return
 
-l3 = tk.Label(window, text="输入线路名",font=('Aerial', 15))
-l3.place(x=0, y = 90)
+button1 = tk.Button(window, text="显示路线", bg='white', width=15, height=2, command=show_line)
+button1.place(x=0, y=160)
 
-button1 = tk.Button(window, text="显示路线", bg='red', width=15, height=2, command=show_line)
-button1.place(x=0, y=150)
 
 for tmp_station in station_list:
     text = tmp_station.sname
@@ -315,6 +340,9 @@ for tmp_station in station_list:
     l = tk.Label(window, text=text, bg= color, font=('Aerial', 5))
     l.place(x=mapx, y=mapy)
     station_label_list.append((tmp_station, l))
+
+
+
 window.mainloop()
 
 
