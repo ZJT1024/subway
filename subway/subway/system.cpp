@@ -9,7 +9,7 @@ using namespace std;
 System::System()
 {
 	fstream in;
-	in.open("in.txt", ios::in);
+	in.open("beijing-subway.txt", ios::in);
 
 	if (!in.is_open())
 	{
