@@ -12,7 +12,7 @@ Station::Station()
 	name = "";
 }
 
-Station::Station(int temp_id = 0, int temp_x = 0, int temp_y = 0, string temp_name = "")
+Station::Station(int temp_id, int temp_x, int temp_y, string temp_name)
 {
 	id = temp_id;
 	x = temp_x;

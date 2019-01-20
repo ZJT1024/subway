@@ -15,8 +15,8 @@
 
 typedef long long int ll;
 
-const int Maxn = 400 ;
-const int Maxm = 40 ;
+const int Maxn = 400;
+const int Maxm = 40;
 const int INF = 0x3f3f3f3f;
 const int Maxsize = 1e7;
 const int extral_cost = 3;

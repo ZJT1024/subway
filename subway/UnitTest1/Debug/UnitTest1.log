@@ -1,0 +1,8 @@
+﻿  unittest1.cpp
+c:\users\lenovo\desktop\temp\subway\subway\headfile.h(21): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+c:\users\lenovo\desktop\temp\subway\subway\system.cpp(88): warning C4154: 删除数组表达式；转换到提供的指针
+c:\users\lenovo\desktop\temp\subway\subway\system.cpp(92): warning C4154: 删除数组表达式；转换到提供的指针
+c:\users\lenovo\desktop\temp\subway\subway\system.cpp(96): warning C4154: 删除数组表达式；转换到提供的指针
+c:\users\lenovo\desktop\temp\subway\subway\system.cpp(148): warning C4018: “<”: 有符号/无符号不匹配
+    正在创建库 C:\Users\lenovo\Desktop\temp\subway\Debug\UnitTest1.lib 和对象 C:\Users\lenovo\Desktop\temp\subway\Debug\UnitTest1.exp
+  UnitTest1.vcxproj -> C:\Users\lenovo\Desktop\temp\subway\Debug\UnitTest1.dll

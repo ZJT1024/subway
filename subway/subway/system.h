@@ -6,13 +6,13 @@
 
 class System
 {
-private :
+private:
 	int station_num;
-	Station * station_set;
+	Station  station_set[Maxn];
 	map<string, int > station_dic;
 
 	int line_num;
-	Line * line_set;
+	Line line_set[Maxm];
 	map<string, int> line_dic;
 
 	vector<pair<int, int >> graph[Maxn];  // 记录每个站点可达的站点信息
@@ -30,12 +30,13 @@ private :
 		}
 	};
 
-	int* station_book;
+	int station_book[Maxn];
 	queue<int> station_que;  //  记录未访问过的结点
 	map<int, string> decode_station;  // 将站点id对应站点名字
 
-public :
+public:
 	System();
-	int Find_the_route(const string& start_station , const string& end_station , int transform , string& order);
-	int Traversal(const string& now_station , string& order);
+	~System();
+	int Find_the_route(const string& start_station, const string& end_station, int transform, string& order);
+	int Traversal(const string& now_station, string& order);
 };

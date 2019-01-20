@@ -5,14 +5,14 @@
 
 using namespace std;
 
-Line:: Line()
+Line::Line()
 {
 	num = 0;
 	name = "";
 	station_order.clear();
 }
 
-Line::Line(int temp_num = 0, string temp_name = "")
+Line::Line(int temp_num, string temp_name)
 {
 	num = temp_num;
 	name = temp_name;

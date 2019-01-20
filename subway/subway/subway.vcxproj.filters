@@ -41,10 +41,10 @@
     <ClCompile Include="subway.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="station.cpp">
+    <ClCompile Include="line.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="line.cpp">
+    <ClCompile Include="station.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="system.cpp">
