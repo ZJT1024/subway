@@ -34,3 +34,8 @@ Line& Line::operator=(const Line& a)
 
 	return *this;
 }
+
+int Line::Get_num()  //  返回该线上的站点数量
+{
+	return num;
+}
