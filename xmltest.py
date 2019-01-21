@@ -201,7 +201,7 @@ def find_a_way_by_cost():
     # python对文件进行处理
     tmp_sname_list = []
     input_path = 'station_order.txt'
-    input_file = codecs.open(input_path, 'r'  )
+    input_file = codecs.open(input_path, 'r')
     i = 0
     output = ''
     tmp_sname_color_dic = {}
